@@ -1,3 +1,110 @@
 \chapter{Methodology}
 
-Begin writing your methodology here.
+\section{Introduction}
+
+The microstructural evolution in our system is governed by the Cahn--Hilliard equation~[3.1] and the Allen--Cahn equation~[3.2]:
+\begin{equation}
+\frac{\partial c}{\partial t}=\nabla\cdot(M\nabla\mu)
+\end{equation}
+\begin{equation}
+\frac{\partial \eta}{\partial t}=-L\frac{\delta F}{\delta \eta},
+\end{equation}
+where $M$ is the atomic mobility, $\mu$ is the chemical potential, and $L$ is the relaxation coefficient for the order parameter.
+
+Chemical potential $\mu$ is defined as the variational derivative of the total free energy per atom, $F$, with respect to the local composition $c$,
+\begin{equation}
+\mu=\frac{\delta \left(F/NV\right)}{\delta c}.
+\end{equation}
+
+The total free energy of the system $F$ is assumed to be given by the sum of a chemical contribution $F^{ch}$ and an elastic contribution $F^{el}$:
+\begin{equation}
+F=F^{ch}+F^{el}.
+\end{equation}
+
+The chemical contribution $F^{ch}$ is given by the following functional:
+\begin{equation}
+F^{ch}=N_v\int_\Omega \left[f(c,\eta)+K_c(\nabla c)^2+K_\eta(\nabla \eta)^2\right] d\Omega,
+\end{equation}
+where $f(c,\eta)$ is the bulk free energy per atom, $K_c$ and $K_\eta$ are the gradient energy coefficients for gradients in composition and order parameter, respectively, and $NV$ is the number of atoms per unit volume.
+
+The bulk free energy density $f(c,\eta)$ is given by,
+\begin{equation}
+f(c,\eta)=f^{m}(c)\left(1-W(\eta)\right)+f^p(c)W(\eta)+P\eta^2(1-\eta)^2,
+\end{equation}
+where $P$, a constant, sets the height of the free energy barrier between the m-phase and p-phase.
+
+In Eq.~(3.6), $f^{m}(c)$ and $f^p(c)$ stand for free energies of m (matrix) and p (precipitate) phases, respectively. In our work, they are assumed to take the following simple forms:
+\begin{equation}
+f^{m}(c)=Ac^2,
+\end{equation}
+\begin{equation}
+f^p(c)=B(1-c)^2,
+\end{equation}
+with positive constants $A$ and $B$. In Eq.~(3.6), $W(\eta)$ is an interpolation function~[15], given by:
+\begin{equation}
+W(\eta)=
+\begin{cases}
+0, & \text{for } \eta<0, \\
+\eta^3(10-15\eta+6\eta^2), & \text{for } 0\leq \eta\leq 1, \\
+1, & \text{for } \eta>1.
+\end{cases}
+\end{equation}
+
+The elastic contribution to the free energy is:
+\begin{equation}
+F^{el}=\frac{1}{2}\int_X \sigma_{ij}^{el}\epsilon_{ij}^{el}\,dX,
+\end{equation}
+where
+\begin{equation}
+\epsilon_{ij}^{el}=\epsilon_{ij}-\epsilon_{ij}^{0},
+\end{equation}
+where $\sigma_{ij}^{el}$ and $\epsilon_{ij}^{el}$ are elastic stress and strain tensors, respectively, and $\epsilon^0$ is the position-dependent eigenstrain (misfit strain). The total strain $\epsilon_{ij}$ is:
+\begin{equation}
+\epsilon_{ij}=\frac{1}{2}\left(\frac{\partial u_i}{\partial r_j}+\frac{\partial u_j}{\partial r_i}\right),
+\end{equation}
+where $u_i$ is the displacement field.
+
+Assuming both the m and p phases to be linearly elastic, we have:
+\begin{equation}
+\sigma_{kl}^{el}=C_{ijkl}\epsilon_{ij}^{el},
+\end{equation}
+where $C_{ijkl}$ is the elastic modulus tensor.
+
+The stress field $\sigma_{ij}^{el}$ obeys the equation of mechanical equilibrium:
+\begin{equation}
+\sigma_{ij,j}^{el}=0.
+\end{equation}
+
+The eigenstrain $\epsilon_{ij}^{0}$ and the elastic moduli $C_{ijkl}$ are assumed to depend on the order parameter as follows:
+\begin{equation}
+\epsilon_{ij}^{0}(\eta)=\beta(\eta)e_T\delta_{ij},
+\end{equation}
+\begin{equation}
+C_{ijkl}(\eta)=C_{ijkl}^{eff}+\phi(\eta)\Delta C_{ijkl},
+\end{equation}
+where $e_T$ is a constant that determines the strength of the eigenstrain, $\delta_{ij}$ is the Kronecker delta, $\beta(\eta)$ and $\phi(\eta)$ are scalar interpolation functions, $C_{ijkl}^{eff}$ is an ``effective'' modulus, $C_{ijkl}^p$ and $C_{ijkl}^m$ are the elastic moduli tensor of the p and m phases, respectively, and $\Delta C_{ijkl}=C_{ijkl}^p-C_{ijkl}^m$. All the model parameters used in our simulations are listed in their non-dimensional form in Table~1.
+
+\begin{table}[ht]
+\centering
+\caption{Parameters used in the simulations.}
+\label{tab:params}
+\begin{tabular}{lll}
+\hline
+\textbf{Parameter type} & \textbf{Parameter} & \textbf{Non-dimensional values} \\
+\hline
+Elastic parameters & $G^{m}$ & 800 \\
+ & $\nu$ & 0.3 \\
+ & $\delta$ & 0.5, 1.0 and 2.0 \\
+ & $e_T$ & 0.01 \\
+ & $\phi(\eta)$ & $\eta^3(10-15\eta+6\eta^2)$ -1/2 \\
+ & $\beta(\eta)$ & $\eta^3(10-15\eta+6\eta^2)$ \\
+ & $C_{ijkl}^{eff}$ & $\tfrac{1}{2}(C_{ijkl}^m + C_{ijkl}^p)$ \\
+\hline
+Simulation parameters & $\Delta x$ & 0.4 \\
+ & $\Delta y$ & 0.4 \\
+ & $\Delta t$ & 0.2 \\
+ & System size & $128\times128$ in 2D, $512\times512$ in 2D, $1024\times1024$ in 2D \\
+ & Allowed error & $1\times10^{-4}$ in displacements \\
+\hline
+\end{tabular}
+\end{table}
