@@ -1,0 +1,124 @@
+\chapter{Literature Review}
+
+\section{Introduction}
+
+Microstructural evolution in multiphase systems has been extensively studied because of its influence on material properties. Earlier studies mainly focused on precipitate growth, coarsening, and elastic interactions during phase transformations. With the development of computational techniques, phase-field modelling became an important tool for studying such phenomena.
+
+\section{Classical Theory of Precipitate Growth}
+
+Zener and Frank developed the classical diffusion-controlled theory for precipitate growth in supersaturated alloys. Their model established the parabolic growth behavior of precipitates under diffusion-controlled conditions.
+
+Later, Laraia, Johnson, and Voorhees incorporated coherent elastic strain energy into precipitate growth theory. Their work showed that elastic strain energy modifies precipitate growth kinetics and equilibrium conditions.
+
+Although these theories provided important understanding of precipitate growth, they were based on sharp-interface assumptions and became difficult to apply for complex evolving microstructures.
+
+\section{Development of Phase-Field Modelling}
+
+The phase-field method was developed to study microstructural evolution without explicit interface tracking.
+
+Cahn and Hilliard introduced a diffuse-interface model for conserved composition evolution through the Cahn--Hilliard equation:
+
+\begin{equation}
+\frac{\partial c}{\partial t}=\nabla\cdot(M\nabla\mu)
+\end{equation}
+
+Allen and Cahn later introduced an evolution equation for non-conserved order parameters:
+
+\begin{equation}
+\frac{\partial \eta}{\partial t}=-L\frac{\delta F}{\delta \eta}
+\end{equation}
+
+These equations became the foundation of modern phase-field modelling and have been widely used for studying:
+
+\begin{itemize}
+	\item phase separation,
+	\item precipitate growth,
+	\item coarsening,
+	\item and morphology evolution.
+\end{itemize}
+
+\section{Elastic Effects in Phase-Field Models}
+
+Khachaturyan developed the microelasticity theory for incorporating elastic interactions into heterogeneous systems. This framework enabled the inclusion of elastic strain energy in phase-field simulations.
+
+Subsequent studies demonstrated that elastic interactions strongly influence:
+
+\begin{itemize}
+	\item precipitate morphology,
+	\item particle alignment,
+	\item directional coarsening,
+	\item and microstructural stability.
+\end{itemize}
+
+Elastic energy in coherent systems is generally expressed as:
+
+\begin{equation}
+F^{el}=\frac{1}{2}\int_{\Omega}\sigma_{ij}^{el}\epsilon_{ij}^{el}d\Omega
+\end{equation}
+
+The associated mechanical equilibrium condition is:
+
+\begin{equation}
+\frac{\partial \sigma_{ij}}{\partial x_j}=0
+\end{equation}
+
+\section{Rafting and Elastic Inhomogeneity}
+
+Several studies investigated rafting behavior in elastically stressed systems.
+
+Schmidt and Gross studied the effect of elastic modulus mismatch and applied stress on precipitate rafting. Their work showed that the direction of rafting depends on:
+
+\begin{itemize}
+	\item \textbf{Applied stress},
+	\item \textbf{Eigenstrain},
+	\item and \textbf{Elastic Inhomogeneity}.
+\end{itemize}
+
+Gururajan and Abinandanan developed a phase-field model for studying rafting in elastically inhomogeneous systems. Their simulations demonstrated that elastic modulus mismatch significantly affects precipitate morphology and directional coarsening.
+
+These studies suggested that elastic interactions may also influence topology evolution and phase connectivity.
+
+\section{Numerical Methods}
+
+Different numerical approaches have been used in phase-field simulations, including:
+
+\begin{itemize}
+	\item \textbf{Finite Difference Method (FDM)},
+	\item \textbf{Finite Element Method (FEM)},
+	\item \textbf{Fourier spectral methods}.
+\end{itemize}
+
+FFT-based spectral methods are widely used because of their computational efficiency and spectral accuracy in periodic systems. However, these methods inherently assume periodic boundary conditions.
+
+Finite Difference Method provides greater flexibility for:
+
+\begin{itemize}
+	\item \textbf{non-periodic boundary conditions},
+	\item \textbf{finite-domain simulations},
+	\item \textbf{Iterative numerical implementation}.
+\end{itemize}
+
+Because of these advantages, FDM is suitable for studying topology evolution and connectivity changes in finite systems.
+
+\section{Research Gap}
+
+Most previous studies focused primarily on:
+
+\begin{itemize}
+	\item precipitate growth,
+	\item elastic coarsening,
+	\item and rafting phenomena.
+\end{itemize}
+
+Relatively limited work has been carried out on phase inversion using phase-field methods with elastic interactions.
+
+Furthermore, most elastic phase-field studies employed FFT-based spectral techniques together with periodic boundary conditions.
+
+The present work attempts to study topology evolution towards phase inversion using:
+
+\begin{itemize}
+	\item coupled Allen--Cahn and Cahn-Hilliard equations,
+	\item elastic free energy formulation,
+	\item Finite Difference Method,
+	\item and non-periodic boundary conditions.
+\end{itemize}

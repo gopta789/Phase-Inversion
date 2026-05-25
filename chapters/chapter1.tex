@@ -1,0 +1,127 @@
+\chapter{Introduction}
+
+\section{Introduction}
+
+Microstructural evolution plays a crucial role in determining the mechanical, thermal, and physical properties of engineering materials. Processes such as phase separation, precipitate growth, coarsening, and solid state transformations strongly influence material behavior in alloys, ceramics, semiconductors, and functional materials. Understanding these processes is therefore important for the design and optimization of advanced materials systems.
+
+During solid state phase transformations, the evolution of precipitates within a matrix phase is governed by thermodynamic and kinetic factors. In many alloy systems, precipitate growth occurs through diffusion-controlled mechanisms, where atoms diffuse from a supersaturated matrix into the precipitate phase. The morphology, growth rate, and spatial distribution of precipitates significantly affect material properties such as hardness, strength, creep resistance, conductivity, and phase stability.
+
+In addition to chemical free energy, elastic interactions also play an important role in precipitate evolution. When the lattice parameters of the precipitate and matrix phases differ, elastic strain energy develops due to lattice mismatch. This misfit strain alters the local stress field and influences precipitate growth kinetics, morphology evolution, and microstructural stability.
+
+Traditional sharp-interface approaches, such as the Zener–Frank theory and the Laraia–Johnson–Voorhees (LJV) theory, have been widely used to study diffusion-controlled precipitate growth. However, these approaches require explicit interface tracking and become difficult to apply for complex evolving morphologies. To overcome these limitations, diffuse-interface approaches such as the phase-field method have become increasingly important.
+
+\section{Phase-Field Method}
+
+The phase-field method is a powerful computational technique used to model microstructural evolution without explicitly tracking interfaces. In this method, interfaces are represented as diffuse regions across which field variables vary continuously. The microstructure is described using continuous order parameters and composition fields.
+
+The major advantage of the phase-field approach is its ability to naturally handle:
+\begin{itemize}
+    \item complex interface evolution,
+    \item precipitate coarsening,
+    \item elastic interactions,
+    \item morphology changes,
+    \item and multiphase systems.
+\end{itemize}
+
+The phase-field framework is thermodynamically consistent and is based on the minimization of the total free energy of the system.
+
+For systems involving conserved composition fields, the evolution is governed by the Cahn–Hilliard equation:
+\begin{equation}
+\frac{\partial c}{\partial t}=\nabla\cdot\left(M\nabla\mu\right)
+\end{equation}
+where:
+\begin{itemize}
+    \item $c$ is the composition field,
+    \item $M$ is the mobility,
+    \item $\mu$ is the chemical potential.
+\end{itemize}
+
+For non-conserved order parameters, the evolution is governed by the Allen–Cahn equation:
+\begin{equation}
+\frac{\partial \eta}{\partial t}=-L\frac{\delta F}{\delta \eta}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\eta$ is the order parameter,
+    \item $L$ is the relaxation coefficient,
+    \item $F$ is the total free energy.
+\end{itemize}
+
+The coupled solution of these equations enables simulation of precipitation, phase separation, and interface evolution.
+
+\section{Elastic Effects in Phase Transformations}
+
+Elastic stresses arise during phase transformations because of lattice mismatch between the matrix and precipitate phases. These stresses generate elastic strain energy, which contributes to the total free energy of the system.
+
+The elastic contribution becomes especially important in coherent precipitates, where lattice continuity exists across the interface. The resulting elastic interactions can:
+\begin{itemize}
+    \item modify precipitate growth rates,
+    \item influence particle morphology,
+    \item cause directional coarsening,
+    \item and induce rafting phenomena.
+\end{itemize}
+
+The elastic energy is generally expressed as:
+\begin{equation}
+F^{el}=\frac{1}{2}\int_{\Omega}\sigma_{ij}^{el}\epsilon_{ij}^{el}\,d\Omega
+\end{equation}
+where:
+\begin{itemize}
+    \item $\sigma_{ij}^{el}$ is the elastic stress tensor,
+    \item $\epsilon_{ij}^{el}$ is the elastic strain tensor.
+\end{itemize}
+
+The elastic strain is obtained from:
+\begin{equation}
+\epsilon_{ij}^{el}=\epsilon_{ij}-\epsilon_{ij}^{0}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\epsilon_{ij}$ is the total strain,
+    \item $\epsilon_{ij}^{0}$ is the eigenstrain or misfit strain.
+\end{itemize}
+
+Mechanical equilibrium in the system is governed by:
+\begin{equation}
+\frac{\partial \sigma_{ij}}{\partial x_j}=0
+\end{equation}
+
+Accurate computation of elastic fields is therefore essential for realistic microstructural simulations.
+
+\section{Numerical Methods for Elastic Field Calculation}
+
+Several numerical techniques have been developed for solving elastic equilibrium equations in phase-field models. Fourier spectral methods based on Fast Fourier Transform (FFT) are widely used because of their computational efficiency in periodic systems. These methods transform differential equations into algebraic equations in Fourier space and are particularly effective for periodic boundary conditions.
+
+However, FFT-based spectral methods have limitations when non-periodic boundary conditions are required. Many real physical systems involve fixed, open, or non-periodic boundaries where spectral periodicity assumptions are not valid.
+
+To address this limitation, the present work employs the Finite Difference Method (FDM) for solving the governing equations. In the FDM approach, spatial derivatives are approximated using finite difference approximations on discrete grids. This method provides flexibility in handling non-periodic boundary conditions and allows direct implementation of physically realistic boundary constraints.
+
+Unlike FFT-based approaches, the present work solves the elastic equilibrium equations using iterative finite-difference discretization techniques under non-periodic boundary conditions.
+
+\section{Motivation of the Present Work}
+
+Most previous phase-field studies of precipitate growth involving elastic interactions have primarily used Fourier spectral methods with periodic boundary conditions. Although computationally efficient, these approaches may introduce artificial periodic interactions and may not accurately represent finite systems or systems with realistic physical boundaries.
+
+The present work is motivated by the need to study precipitate growth using:
+\begin{itemize}
+    \item non-periodic boundary conditions,
+    \item finite difference discretization,
+    \item and direct numerical solution of elastic equilibrium equations.
+\end{itemize}
+
+The implementation of finite difference techniques enables greater flexibility in modeling systems where periodicity assumptions are not appropriate.
+
+In addition, the coupled solution of Allen–Cahn and Cahn–Hilliard equations with elastic energy contributions provides a comprehensive framework for studying diffusion-controlled precipitate evolution.
+
+\section{Objectives of the Present Work}
+
+The main objectives of the present thesis are:
+\begin{enumerate}
+    \item To develop a phase-field model for precipitate growth in elastically stressed systems.
+    \item To couple the Allen–Cahn and Cahn–Hilliard equations for microstructural evolution.
+    \item To incorporate elastic strain energy arising from lattice mismatch between precipitate and matrix phases.
+    \item To solve the elastic equilibrium equations using the Finite Difference Method (FDM).
+    \item To implement non-periodic boundary conditions in the numerical simulations.
+    \item To investigate the effect of elastic interactions on precipitate growth and morphology evolution.
+    \item To compare the simulated microstructural evolution with classical theoretical predictions and previous computational studies.
+\end{enumerate}
