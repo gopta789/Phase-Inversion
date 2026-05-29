@@ -1,0 +1,29 @@
+{
+  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk (xelatex)",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-interaction=nonstopmode",
+        "-synctex=1",
+        "-file-line-error",
+        "-halt-on-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": [
+        "%DOCFILE%"
+      ]
+    }
+  ],
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.synctex.afterBuild.enabled": true
+}

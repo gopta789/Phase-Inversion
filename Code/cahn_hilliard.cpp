@@ -330,8 +330,8 @@ double &sxx,double &syy,double &sxy)
     for(int l=0;l<2;l++)
     {
         double Cijkl =
-        Ceff[i][j][k][l]
-        +phi(gval)*DeltaC[i][j][k][l];
+        Ceff[i][j][k][l] +
+        phi(gval)*DeltaC[i][j][k][l];
 
         sigma[i][j]+=Cijkl*eps[k][l];
     }
@@ -420,7 +420,7 @@ int main() {
     init_Ceff();
     init_composition();
     init_displacement();
-    ofstream fout_init("C:/Users/Aashu/plotting/eq2_initial_elastic.dat");
+    ofstream fout_init("eq2_initial_elastic.dat");
     for (int i = 0; i < nx; i++) {
         for (int j = 0; j < ny; j++) {
             fout_init << i << " " << j << " " << g[i][j] << "\n";
@@ -483,7 +483,7 @@ int main() {
         // }
 
     }
-    ofstream fout_fnl("C:/Users/Aashu/plotting/eq2_final_elastic.dat");
+    ofstream fout_fnl("eq2_final_elastic.dat");
     for (int i = 0; i < nx; i++) {
         for (int j = 0; j < ny; j++) {
             fout_fnl << i << " " << j << " " << g[i][j] << "\n";

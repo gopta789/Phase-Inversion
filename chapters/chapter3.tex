@@ -13,7 +13,7 @@ where $M$ is the atomic mobility, $\mu$ is the chemical potential, and $L$ is th
 
 Chemical potential $\mu$ is defined as the variational derivative of the total free energy per atom, $F$, with respect to the local composition $c$,
 \begin{equation}
-\mu=\frac{\delta \left(F/NV\right)}{\delta c}.
+\mu=\frac{\delta \left(F/N_v\right)}{\delta c}.
 \end{equation}
 
 The total free energy of the system $F$ is assumed to be given by the sum of a chemical contribution $F^{ch}$ and an elastic contribution $F^{el}$:
@@ -52,7 +52,7 @@ W(\eta)=
 
 The elastic contribution to the free energy is:
 \begin{equation}
-F^{el}=\frac{1}{2}\int_X \sigma_{ij}^{el}\epsilon_{ij}^{el}\,dX,
+F^{el}=\frac{1}{2}\int_\Omega \sigma_{ij}^{el}\epsilon_{ij}^{el}\,d\Omega,
 \end{equation}
 where
 \begin{equation}
@@ -108,3 +108,248 @@ Simulation parameters & $\Delta x$ & 0.4 \\
 \hline
 \end{tabular}
 \end{table}
+
+\section{Cahn Hilliard equation} 
+The Cahn-Hilliard equation from Eq.~(3.1) can be rewritten as:
+\[
+\frac{\partial c}{\partial t}=\nabla\cdot\bigl(M\nabla\mu\bigr)
+\]
+where $\mu$ from Eq.~(3.3) is given by:
+\[
+\mu=\frac{\delta (F/N_v)}{\delta c}.
+\]
+From Eq.~(3.4), we have:
+\[
+F=F^{ch}+F^{el}.
+\]
+so, we can write $\mu$ as:
+\[
+\mu=\frac{\delta (F^{ch}/N_v)}{\delta c}+\frac{\delta (F^{el}/N_v)}{\delta c}.
+\]
+We get $\mu^{ch}$ by taking the functional derivative of $F^{ch}$, which is given by Eq.~(3.5). First we substitute Eq.~(3.7) and Eq.~(3.8) in Eq.~(3.6) and then into the Eq.~(3.5) expression for $\mu^{ch}$, we get:
+\[
+\mu^{ch}=2Ac(1-W(\eta))+2B(1-c)W(\eta)-2K_c\nabla^2.
+\]
+The elastic contribution to the total free energy is given by Eq.~(3.10):
+\[
+F^{el}=\frac{1}{2}\int_\Omega \sigma_{ij}^{el}\epsilon_{ij}^{el}\,d\Omega.
+\]
+To solve the Elastic contribution we have to first solve the Eq.~(3.11) and Eq.~(3.13) for the elastic stress($\sigma_{ij}^{el}$) and strain tensors($\epsilon_{ij}^{el}$), which are given by:
+\[
+\epsilon_{ij}^{el}=\epsilon_{ij}-\epsilon_{ij}^{0},
+\]
+\[\sigma_{kl}^{el}=C_{ijkl}\epsilon_{ij}^{el},
+\]
+For Elastic Strain we have Eq.~(3.12) and it suggests that we can get the total strain $\epsilon_{ij}$ by solving for the displacement field $u_i$ using the following equation:
+\[\epsilon_{ij}=\frac{1}{2}\left(\frac{\partial u_i}{\partial r_j}+\frac{\partial u_j}{\partial r_i}\right).    
+\]
+Also, we have $\epsilon_{ij}^{0}$ from Eq.~(3.15) and $C_{ijkl}$ from Eq.~(3.16). After substituting these into the expression for $\sigma_{ij}^{el}$, we can then solve for the elastic stress field by solving the equation of mechanical equilibrium given by Eq.~(3.14):
+\[\epsilon_{ij}^{0}(\eta)=\beta(\eta)e_T\delta_{ij},
+\]
+\[C_{ijkl}(\eta)=C_{ijkl}^{eff}+\phi(\eta)\Delta C_{ijkl},
+\]
+\[\sigma_{ij,j}^{el}=0.
+\]
+After solving for $\sigma_{ij}^{el}$ and $\epsilon_{ij}^{el}$, we can substitute them into the expression for $F^{el}$ and then take the functional derivative to get $\mu^{el}$, which is the elastic contribution to the chemical potential. Finally, we can substitute $\mu^{ch}$ and $\mu^{el}$ into the Cahn-Hilliard equation to get the final form of the Cahn-Hilliard equation with elasticity. The final form of the Cahn-Hilliard equation with elasticity is given by:
+\[
+\frac{\partial c}{\partial t}=\nabla\cdot\bigl(M\nabla(\mu^{ch}+\mu^{el}))\bigr).
+\]
+\section{Allen-Cahn equation}
+The Allen--Cahn equation from Eq.~(3.2) can be written as:
+\[
+\frac{\partial \eta}{\partial t} = -L\frac{\delta F}{\delta \eta}.
+\]
+Using $F=F^{ch}+F^{el}$ we write
+\[
+\frac{\delta F}{\delta \eta}=\frac{\delta F^{ch}}{\delta \eta}+\frac{\delta F^{el}}{\delta \eta}.
+\]
+In the absence of elasticity $\delta F^{el}/\delta\eta=0$, hence
+\[
+\frac{\delta (F^{ch}/N_v)}{\delta \eta}=\frac{\partial f(c,\eta)}{\partial \eta}-2K_{\eta}\nabla^2\eta.
+\]
+Using the bulk free energy density from Eq.~(3.6) we obtain the explicit chemical contribution
+\[
+\frac{\delta (F^{ch}/N_v)}{\delta \eta}=(f^p(c)-f^m(c))W'(\eta)+2P\eta(1-\eta)(1-2\eta)-2K_{\eta}\nabla^2\eta,
+\]
+where $W'(\eta)=dW/d\eta$. Substituting $f^m(c)=Ac^2$ and $f^p(c)=B(1-c)^2$ gives the commonly used form:
+\[
+\frac{\partial \eta}{\partial t} = -L\Big[(B(1-c)^2-Ac^2)W'(\eta)+2P\eta(1-\eta)(1-2\eta)-2K_{\eta}\nabla^2\eta\Big] + \frac{\delta F^{el}}{\delta \eta}.
+\]
+For the Allen--Cahn equation, the elastic contribution $\delta F^{el}/\delta \eta$ is solved in the same way as described in the previous section for the Cahn-Hilliard equation. After solving for $\delta F^{el}/\delta \eta$, we can substitute it into the above equation to get the final form of the Allen--Cahn equation with elasticity.
+
+\subsection{Solving Elasticity}
+The elastic moduli and the eigenstrains are non-periodic on $\Omega$ (since they depend on the composition field which is non-periodic on $\Omega$); therefore, the solution to the equilibrium equation (Eq.~(3.14)) should be such that it gives rise to a strain field $e(\mathbf{r})$ that is non-periodic on $\Omega$ (up to an additive constant). The displacement field $\mathbf{u}(\mathbf{r})$ which gives rise to such non-periodic strain fields can always be written as follows~[30]:
+
+\begin{equation}
+\mathbf{u}=\mathbf{E}\,\mathbf{r}+\mathbf{u}^{\star} \label{eq:disp_decomp}
+\end{equation}
+
+where $\mathbf{u}^{\star}$ is a displacement field that is non-periodic on $\Omega$ and $\mathbf{E}$ is a constant, homogeneous strain tensor (assumed to be symmetric without loss of generality, since the antisymmetric part corresponds to a rigid rotation of the cell). It can be shown~[30] that $\mathbf{E}$ denotes the mean strain tensor of the cell:
+\begin{equation}
+\langle \{e_{ij}\}\rangle = E_{ij}
+\end{equation}
+
+with the following definition for the mean $\langle\{\cdot\}\rangle$ of a quantity $\{\cdot\}$:
+\begin{equation}
+\langle\{\cdot\}\rangle=\frac{1}{V}\int_\Omega \{\cdot\}\,d\Omega
+\end{equation}
+
+where $V$ is the volume of the representative domain $\Omega$. If we denote the periodic strain by $\epsilon^\star$ (such that $\langle \epsilon^\star\rangle=0$), the strain that we derive from the displacement decomposition (Eq.~\eqref{eq:disp_decomp}) becomes
+
+\begin{equation}
+\epsilon_{ij}=E_{ij}+\epsilon^{\star}_{ij}
+\end{equation}
+
+where
+
+\begin{equation}
+\epsilon^{\star}_{ij}=\frac{1}{2}\left(\frac{\partial u^{\star}_i}{\partial r_j}+\frac{\partial u^{\star}_j}{\partial r_i}\right).
+\end{equation}
+
+Analogous to the expression Eq.~(3.18) for the homogeneous strain, we can define the mean stress on the domain $\Omega$ as follows:
+
+\begin{equation}
+\langle\{\sigma^{el}_{ij}\}\rangle=\frac{1}{V}\int_\Omega \sigma^{el}_{ij}\,d\Omega
+\end{equation}
+
+The mean stress thus calculated should equal the applied stress $\sigma^A$~[30,31,37] [As a brief aside,we note that while Refs.[30,31] used the homogenization assumption, Jin etal.[37] used a variational approach to arrive at the above conclusion, viz., that the mean stress should equal the applied stress]. Substituting for $\sigma^{el}_{ij}$ from Eq.~(3.13), we obtain
+\begin{equation}
+\sigma^A_{ij}=\frac{1}{V}\int_\Omega C_{ijkl}\left(E_{kl}+\epsilon^{\star}_{kl}-\epsilon^0_{kl}\right)\,d\Omega
+\end{equation}
+
+Further, using the definition in Eq.~(3.19), we can define the following mean quantities:
+
+\begin{equation}
+S_{ijkl}=\langle \{C_{ijkl}\}\rangle^{-1},\quad
+\langle\{\sigma^{\star}_{ij}\}\rangle=\langle \{C_{ijkl}\epsilon^{\star}_{kl}\}\rangle,\quad
+\langle\{\sigma^0_{ij}\}\rangle=\langle \{C_{ijkl}\epsilon^0_{kl}\}\rangle
+\end{equation}
+
+Using the Eq.~(3.23) and Eq.~(3.24) we obtain
+
+\begin{equation}
+E_{ij}=S_{ijkl}[\sigma^A_{kl}+\langle\{\sigma^0_{kl}\}\rangle-\langle\{\sigma^{\star}_{kl}\}\rangle]
+\end{equation}
+
+We may restate the elasticity problem as follows: given a non-periodic composition field $c$ on $\Omega$, solve the equation of mechanical equilibrium
+\begin{equation}
+\frac{\partial}{\partial r_j}\left[C_{ijkl}\left(E_{kl}+e^{\star}_{kl}-e^0_{kl}\right)\right]=0 \quad\text{on } \Omega
+\end{equation}
+
+with the constraint
+
+\begin{equation}
+E_{ij}=S_{ijkl}\left(\sigma^A_{kl}+\langle\{\sigma^0_{kl}\}\rangle-\langle\{\sigma^{\star}_{kl}\}\rangle\right)
+\end{equation}
+
+and the boundary condition
+
+\begin{equation}
+e^{\star}_{kl}\text{ is non-periodic on } \Omega.
+\end{equation}
+
+Substituting for $C_{ijkl}$ and $e^0_{kl}$ in terms of composition, and $e^{\star}_{kl}$ in terms of the displacement field in the equilibrium equation Eq.~(3.26), and using the symmetry properties of the elastic constants and strains, we obtain
+\begin{equation}
+\frac{\partial}{\partial r_j}\left[\left(C_{ijkl}^{eff}+\phi(c)\Delta C_{ijkl}\right)\left(E_{kl}+\frac{1}{2}\left(\frac{\partial u^{\star}_k}{\partial r_l}+\frac{\partial u^{\star}_l}{\partial r_k}\right)-\beta(c)\epsilon_T\delta_{kl}\right)\right]=0.
+\end{equation}
+\begin{equation}
+\begin{split}
+\left[ C_{ijkl}^{eff}\frac{\partial^2}{\partial r_j \partial r_k} + \Delta C_{ijkl}\frac{\partial}{\partial r_j}\left(\phi(c)\frac{\partial}{\partial r_k}\right) \right] u^{\star}_l(r)
+&\quad =C_{ijkl}^{eff}\epsilon_T\delta_{kl}\frac{\partial\beta(c)}{\partial r_j} - \Delta C_{ijkl}E_{kl}\frac{\partial\phi(c)}{\partial r_j} \\
+&\quad + \Delta C_{ijkl}^{eff}\epsilon_T\delta_{kl}\frac{\partial\{\phi(c)\beta(c)\}}{\partial r_j}.
+\end{split}
+\end{equation}
+In earlier work on the role of elastic inhomogeneity~[33,19], the homogeneous strain $E_{ij}$ was assumed to take a constant value. For example, in Ref.~[33] it is assumed to be zero, while in Ref.~[19], where microstructural evolution is studied under an applied stress, a constant strain is imposed on the system through a constant $E_{ij}$ tensor. In contrast, our present formulation allows for a prescribed overall stress (which is achieved by controlling the strain). This approach is known as ``stress-control based on strain-control'' (see Appendix D of Ref.~[31]).
+\subsection{Computational algorithm}
+The equation of mechanical equilibrium, Eq.~(3.30), can be solved numerically using an iterative solver such as the Liebmann method.We begin with the zeroth order approximation to the solution by assuming that $\Delta C_{ijkl} = 0$. Thus, Equation reduces to:
+\begin{equation}
+C_{ijkl}^{eff}\frac{\partial^2 u^{\star}_l}{\partial r_j \partial r_k} = C_{ijkl}^{eff}\epsilon_T\delta_{kl}\frac{\partial\beta(c)}{\partial r_j}
+\end{equation}
+Taking $\epsilon_{ij}^T=C_{ijkl}^{eff}\epsilon_T\delta_{kl}$, we can write the above equation as:
+\begin{equation}
+C_{ijkl}^{eff}\frac{\partial^2 u^{\star}_l}{\partial r_j \partial r_k} = \epsilon_{ij}^T\frac{\partial\beta(c)}{\partial r_j}
+\end{equation}
+For i=1,2 above equation will form as two linear equations in $u_x$ and $u_y$. We can solve these equations using the Liebmann method. After solving for $u_x$ and $u_y$, we can calculate the elastic strain and stress fields using Eq.~(3.29) and Eq.~(3.13), respectively. We can then calculate the elastic contribution to the chemical potential $\mu^{el}$ by taking the functional derivative of $F^{el}$ with respect to composition. Finally, we can substitute $\mu^{el}$ into the Cahn-Hilliard equation to get the final form of the Cahn-Hilliard equation with elasticity, which can be solved using a finite difference method.
+\section{Simulation Algorithm}
+
+\subsection{Spatial Discretization}
+
+We discretize the spatial domain using a uniform grid with spacing $\Delta x$ and $\Delta y$ in the $x$ and $y$ directions, respectively. The composition field $c(x,y,t)$ is approximated at grid points $(i\Delta x, j\Delta y)$ as $c_{i,j}^n$, where $n$ denotes the time step. The Laplacian operator is discretized using central differences:
+
+\begin{equation}\label{eq:fd_laplacian}
+\nabla^2 c_{i,j} \approx \frac{c_{i+1,j} - 2c_{i,j} + c_{i-1,j}}{(\Delta x)^2} + \frac{c_{i,j+1} - 2c_{i,j} + c_{i,j-1}}{(\Delta y)^2},
+\end{equation}
+
+and similarly for other field variables. For the chemical potential, we have
+\begin{equation}
+\mu_{i,j} = h(c_{i,j}) - 2K_c \nabla^2 c_{i,j} + \mu^{el}_{i,j},
+\end{equation}
+where $h(c_{i,j}) = \partial f_0/\partial c|_{c_{i,j}}$ is the local chemical potential, and $\mu^{el}_{i,j}$ is the elastic contribution at grid point $(i,j)$.
+
+\subsection{Temporal Discretization of Cahn-Hilliard Equation}
+
+The Cahn--Hilliard equation (Eq.~(3.1)) is discretized in time using a semi-implicit scheme, where the nonlinear term $h(c)$ is treated explicitly and the fourth-order derivative term is treated implicitly:
+
+\begin{equation}\label{eq:ch_semi_implicit}
+\frac{c_{i,j}^{n+1} - c_{i,j}^{n}}{\Delta t} = M \nabla^2 \mu_{i,j}^{\star},
+\end{equation}
+
+where $\mu_{i,j}^{\star}$ is a stabilized chemical potential. To ensure numerical stability, we use:
+\begin{equation}
+\mu_{i,j}^{\star} = h(c_{i,j}^{n}) - 2K_c \nabla^2 c_{i,j}^{n+1} + \mu_{i,j}^{el,n}
+\end{equation}
+
+Expanding and rearranging, the discretized update formula becomes:
+\begin{equation}\label{eq:ch_update}
+c_{i,j}^{n+1} - M\Delta t \cdot 2K_c \nabla^4 c_{i,j}^{n+1} = c_{i,j}^{n} + M\Delta t \nabla^2\left(h(c_{i,j}^{n}) + \mu_{i,j}^{el,n}\right),
+\end{equation}
+
+where $\nabla^4 = \nabla^2(\nabla^2)$ is the biharmonic operator. This is a linear system in $c^{n+1}$ that can be solved iteratively at each time step.
+
+\subsection{Temporal Discretization of Allen-Cahn Equation}
+
+The Allen--Cahn equation (Eq.~(3.2)) is discretized explicitly in time:
+\begin{equation}\label{eq:ac_fd}
+\frac{\eta_{i,j}^{n+1} - \eta_{i,j}^{n}}{\Delta t} = -L\left[\frac{\delta (F^{ch}/N_v)}{\delta \eta}\bigg|_{i,j}^{n} + \frac{\delta (F^{el}/N_v)}{\delta \eta}\bigg|_{i,j}^{n}\right].
+\end{equation}
+
+where $\delta F^{ch}/\delta\eta$ includes the double well and gradient terms:
+\begin{equation}
+\frac{\delta (F^{ch}/N_v)}{\delta \eta} = \frac{\partial f(c,\eta)}{\partial \eta} - 2K_{\eta}\nabla^2\eta.
+\end{equation}
+
+\subsection{Mechanical Equilibrium Solver}
+
+At each time step, the mechanical equilibrium equation (Eq.~(3.30)) is solved using the iterative Liebmann method. The displacement field $u^{\star}_{l,i,j}$ is updated at each iteration using:
+
+\begin{equation}\label{eq:mech_eq_fd}
+u_{l,i,j}^{\star,(k+1)} = u_{l,i,j}^{\star,(k)} + \omega \cdot \text{Residual}^{(k)}_{i,j}
+\end{equation}
+
+where $\omega$ is a relaxation parameter (typically $\omega \in [0.5, 1.5]$), $\text{Residual}^{(k)}_{i,j}$ is the residual from Eq.~(3.30) computed using Eq.~\eqref{eq:fd_laplacian}, and $k$ denotes the iteration count within a time step.
+
+\subsection{Numerical Algorithm}
+
+The overall time-stepping algorithm is:
+\begin{enumerate}
+\item Given $c_{i,j}^n$ and $\eta_{i,j}^n$, compute $h(c_{i,j}^n)$ at all grid points.
+\item Assemble the composition-dependent elastic moduli and eigenstrain fields.
+\item Solve the mechanical equilibrium (Eq.~(3.30)) iteratively using Liebmann method until $\text{Error} < \text{tol}$ (typically $10^{-8}$), obtaining $u^{\star}_{i,j}$.
+\item Compute the elastic strain and stress from the displacement field using Eq.~\eqref{eq:fd_laplacian}.
+\item Calculate the elastic chemical potential $\mu^{el}_{i,j}$ by functional derivative of $F^{el}$.
+\item Solve the discretized Cahn-Hilliard equation (Eq.~\eqref{eq:ch_update}) for $c_{i,j}^{n+1}$.
+\item Update the order parameter using Eq.~\eqref{eq:ac_fd} to obtain $\eta_{i,j}^{n+1}$.
+\item Advance to time step $n+1$ and repeat.
+\end{enumerate}
+
+\subsection{Convergence and Error Control}
+
+Convergence of the mechanical equilibrium solver is monitored using the discrete $L^2$-norm:
+\begin{equation}\label{eq:convergence_norm}
+\mathrm{Error}^{(k)} = \left(\sum_{i,j} \big( u^{(k+1)}_{i,j} - u^{(k)}_{i,j} \big)^{2}\right)^{1/2}.
+\end{equation}
+
+The solution is considered converged when $\mathrm{Error}^{(k)} < \text{tol}_{\mathrm{mech}}$. Additionally, to enhance stability and reduce computation, from the second time step onwards the displacement solution from the previous time step is used as the initial guess for the Liebmann iterations.
+
+
+

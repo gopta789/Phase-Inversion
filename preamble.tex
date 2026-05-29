@@ -1,6 +1,10 @@
 \pagestyle{empty}
 
 \usepackage{float,graphicx,parskip,tabularx,url}
+\makeatletter
+\@addtoreset{table}{chapter}
+\makeatother
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
   {\normalfont\huge\bfseries\centering}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
@@ -37,3 +41,4 @@
 
 % For lorem ipsum text
 \usepackage{lipsum}
+\usepackage{amsmath}
